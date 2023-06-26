@@ -12,8 +12,14 @@ class Member_list(commands.Cog):
         members_list = [member for member in ctx.guild.members if member.bot == False]
         member_list = 'メンバー一覧\n'
         for member in members_list:
-            if member.bot == False:
-                member_list += str(member.nick + '\n')
+            if member.bot == True:
+                continue
+            if member_name:= member.global_name:
+                member_list += str(member_name + '\n')
+                print(member_name)
+            else:
+                member_list += str(member.name + '\n')
+                print(member.name)
         await ctx.send(content = member_list)
 
 def setup(bot):
