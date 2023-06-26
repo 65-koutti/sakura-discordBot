@@ -70,9 +70,6 @@ class MyBot(commands.Bot):
 
     #Bot起動時の動作
     async def on_ready(self):
-        print('-------------------------------------')
-        print(f"Logged in as {self.user.name} (ID: {self.user.id})")
-        print('-------------------------------------')
         channel = self.get_channel(1122132290454179931)
         now = datetime.now(jst)
         for cog in INITIAL_EXTENSIONS:
@@ -85,6 +82,9 @@ class MyBot(commands.Bot):
         await channel.send(
             f"起動完了({now.strftime('%m/%d %H:%M:%S')})\nBot ID:{self.user.id})"
         )
+        print('-------------------------------------')
+        print(f"Logged in as {self.user.name} (ID: {self.user.id})")
+        print('-------------------------------------')
         return
 
 bot = MyBot()
