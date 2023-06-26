@@ -12,4 +12,4 @@ class Ping(commands.Cog):
         return
 
 def setup(bot):
-    bot.add_cog(Ping(bot))
+    return bot.add_cog(Ping(bot))

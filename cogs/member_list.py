@@ -13,7 +13,7 @@ class Member_list(commands.Cog):
         member_list = 'メンバー一覧\n'
         for member in members_list:
             if member.bot == False:
-                member_list += str(member.name + '\n')
+                member_list += str(member.nick + '\n')
         await ctx.send(content = member_list)
 
 def setup(bot):

@@ -38,7 +38,8 @@ INITIAL_EXTENSIONS = [
     'cogs.ping',
     'cogs.member_none_list',
     'cogs.member_list',
-    'cogs.member_none'
+    'cogs.member_none',
+    'cogs.reload'
     ]
 
 
@@ -52,16 +53,17 @@ class MyBot(commands.Bot):
             status = discord.Status.online,
             activity = discord.Activity(
                 type = discord.ActivityType.listening,
-                name = "てぇてぇを監視中"
+                name = "aaaa"
             ),
             help_command=JapaniseHelpCommand()
         )
 
-        # INITIAL_COGSに格納されている名前から、コグを読み込む。
-        # エラーが発生した場合は、エラー内容を表示。
+    # INITIAL_COGSに格納されている名前から、コグを読み込む。
+    # エラーが発生した場合は、エラー内容を表示。
+    async def setup_hook(self):
         for cog in INITIAL_EXTENSIONS:
             try:
-                self.load_extension(cog)
+                await self.load_extension(cog)
             except Exception:
                 traceback.print_exc()
             else:
@@ -74,7 +76,7 @@ class MyBot(commands.Bot):
         now = datetime.now(jst)
         for cog in INITIAL_EXTENSIONS:
             try:
-                self.reload_extension(cog)
+                await self.reload_extension(cog)
             except Exception:
                 traceback.print_exc()
             else:
