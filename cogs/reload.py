@@ -12,7 +12,7 @@ class Reload(commands.Cog):
         """Cog再読み込みコマンド"""
         await ctx.send(f" モジュール{module_name} の再読み込みを開始します。")
         try:
-            self.bot.reload_extension(module_name)
+            await self.bot.reload_extension(module_name)
             await ctx.send(f" モジュール{module_name} の再読み込みを終了しました。")
         except (commands.errors.ExtensionNotLoaded, commands.errors.ExtensionNotFound,
                 commands.errors.NoEntryPointError, commands.errors.ExtensionFailed) as e:
