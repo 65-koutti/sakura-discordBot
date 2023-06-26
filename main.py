@@ -89,19 +89,6 @@ class MyBot(commands.Bot):
 
 bot = MyBot()
 
-
-@bot.is_owner()
-@bot.command()
-async def reload(self, ctx, module_name):
-    await ctx.send(f'モジュール[{module_name}]の再読み込みを開始します。')
-    try:
-        self.bot.reload_extension(module_name)
-        await ctx.send(f'モジュール [{module_name}]の再読み込みが終了しました。')
-    except Exception as e:
-        await ctx.send(f'モジュール [{module_name}]の再読み込みに失敗しました。理由：{e}')
-        return
-
-
 TOKEN = config.TOKEN
 
 if __name__ == '__main__':
