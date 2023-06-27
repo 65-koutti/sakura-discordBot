@@ -10,16 +10,13 @@ class Member_list(commands.Cog):
     async def member_list(self,ctx):
         """サーバーメンバーのリスト取得"""
         members_list = [member for member in ctx.guild.members if member.bot == False]
-        member_list = 'メンバー一覧\n'
+        member_list = 'メンバー一覧\n```'
         for member in members_list:
-            if member.bot == True:
-                continue
             if member_name:= member.global_name:
                 member_list += str(member_name + '\n')
-                print(member_name)
             else:
                 member_list += str(member.name + '\n')
-                print(member.name)
+        member_list = member_list + '```'
         await ctx.send(content = member_list)
 
 def setup(bot):
