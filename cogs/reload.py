@@ -10,13 +10,13 @@ class Reload(commands.Cog):
     @commands.command(name = "reload")
     async def reload(self, ctx, module_name):
         """Cog再読み込みコマンド"""
-        await ctx.send(f" モジュール{module_name} の再読み込みを開始します。")
+        await ctx.send(f" モジュール[{module_name}]の再読み込みを開始します。")
         try:
             await self.bot.reload_extension(module_name)
-            await ctx.send(f" モジュール{module_name} の再読み込みを終了しました。")
+            await ctx.send(f" モジュール[{module_name}]の再読み込みを終了しました。")
         except (commands.errors.ExtensionNotLoaded, commands.errors.ExtensionNotFound,
                 commands.errors.NoEntryPointError, commands.errors.ExtensionFailed) as e:
-            await ctx.send(f" モジュール{module_name} の再読み込みに失敗しました。理由：{e}")
+            await ctx.send(f" モジュール[{module_name}]の再読み込みに失敗しました。理由：{e}")
             return
 
 def setup(bot):
