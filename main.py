@@ -74,13 +74,6 @@ class MyBot(commands.Bot):
     async def on_ready(self):
         channel = self.get_channel(1122132290454179931)
         now = datetime.now(jst)
-        for cog in INITIAL_EXTENSIONS:
-            try:
-                await self.reload_extension(cog)
-            except Exception:
-                traceback.print_exc()
-            else:
-                print(f'extension [{cog}] is reloaded!')
         await channel.send(
             f"起動完了({now.strftime('%m/%d %H:%M:%S')})\nBot ID:{self.user.id})"
         )
