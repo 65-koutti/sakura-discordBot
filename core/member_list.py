@@ -1,7 +1,11 @@
 import discord
 from discord.ext import commands
+from discord import app_commands
 from datetime import datetime, timedelta, timezone
 import io
+import config
+
+GUILD_ID = config.GUILD_ID
 
 utc = timezone.utc
 jst = timezone(timedelta(hours=9), "Asia/Tokyo")
@@ -11,14 +15,13 @@ class Member_list(commands.Cog):
         self.bot = bot
 
     #サーバーメンバーのリスト取得 member_list
-    @commands.command(name = 'member_list')
-    async def member_list(self,ctx):
-        """サーバーメンバーのリスト取得"""
+    @app_commands.command(name = 'member_list', description = 'サーバーメンバーのリスト取得')
+    async def member_list(self, interaction: discord.Interaction):
         now = datetime.now(jst)
-        members_list = [member for member in ctx.guild.members if member.bot == False]
+        members_list = [member for member in interaction.guild.members if member.bot == False]
         member_list = list_create(members_list)
         with io.StringIO(member_list) as list:
-            await ctx.send(file = discord.File(list, filename = f"member_list<{now.strftime('%m.%d,%H.%M')}>.txt"))
+            await interaction.response.send_message(file = discord.File(list, filename = f"member_list<{now.strftime('%m.%d,%H.%M')}>.txt"))
 
 
 def list_create(members) -> str:
@@ -35,6 +38,8 @@ def list_create(members) -> str:
     return list
 
 
-
-def setup(bot):
-    return bot.add_cog(Member_list(bot))
+async def setup(bot):
+    await bot.add_cog(
+        Member_list(bot),
+        guilds = [discord.Object(GUILD_ID)]
+    )

@@ -15,6 +15,5 @@ class Member_none_list(commands.Cog):
             if member.get_role(1097832443031080983) == None :
                 none_roles += str(member.name + '\n')
         await ctx.send(content = none_roles)
-
-def setup(bot):
-    return bot.add_cog(Member_none_list(bot))
+async def setup(bot):
+    await bot.add_cog(Member_none_list(bot))

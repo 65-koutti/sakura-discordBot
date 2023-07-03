@@ -20,5 +20,5 @@ class Member_none(commands.Cog):
         await ctx.send(content = none_roles)
 
 
-def setup(bot):
-    return bot.add_cog(Member_none(bot))
+async def setup(bot):
+    await bot.add_cog(Member_none(bot))

@@ -34,12 +34,13 @@ intents = discord.Intents.all()
 intents.typing = False
 
 #コグの一覧を明記
-INITIAL_EXTENSIONS = [
-    'cogs.ping',
-    'cogs.member_none_list',
-    'cogs.member_list',
-    'cogs.member_none',
-    'cogs.reload'
+CORE_INITIAL_EXTENSIONS = [
+    'core.ping',
+    'core.member_none_list',
+    'core.member_list',
+    'core.member_none',
+    'core.reload',
+    'core.logging'
     ]
 
 
@@ -53,7 +54,7 @@ class MyBot(commands.Bot):
             status = discord.Status.online,
             activity = discord.Activity(
                 type = discord.ActivityType.listening,
-                name = "aaaa"
+                name = "てぇてぇを監視中"
             ),
             help_command=JapaniseHelpCommand()
         )
@@ -61,7 +62,7 @@ class MyBot(commands.Bot):
     # INITIAL_COGSに格納されている名前から、コグを読み込む。
     # エラーが発生した場合は、エラー内容を表示。
     async def setup_hook(self):
-        for cog in INITIAL_EXTENSIONS:
+        for cog in CORE_INITIAL_EXTENSIONS:
             try:
                 await self.load_extension(cog)
             except Exception:
@@ -69,10 +70,12 @@ class MyBot(commands.Bot):
             else:
                 print(f'extension [{cog}] is loaded!')
 
+        # インタラクションをシンクする。
+        await self.tree.sync(guild = discord.Object(id = GUILD_ID))
 
     #Bot起動時の動作
     async def on_ready(self):
-        channel = self.get_channel(1122132290454179931)
+        channel = self.get_channel(LOG_CHANNEL)
         now = datetime.now(jst)
         await channel.send(
             f"起動完了({now.strftime('%m/%d %H:%M:%S')})\nBot ID:{self.user.id})"
@@ -84,7 +87,14 @@ class MyBot(commands.Bot):
 
 bot = MyBot()
 
-TOKEN = config.TOKEN
+#各種必要なデータを取得
+TOKEN  = str(config.TOKEN)
+GUILD_ID = int(config.GUILD_ID)
+LOG_CHANNEL = int(config.LOG_CHANNEL)
+
+
+
+
 
 if __name__ == '__main__':
     bot.run(token = TOKEN)
